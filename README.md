@@ -51,7 +51,24 @@ signaslAPI/
 - Docker 20.10+
 - Docker Compose v2.0+
 
-**Quick Start:**
+**Using Pre-built Image from GHCR:**
+
+```bash
+# Pull the latest image from GitHub Container Registry
+docker pull ghcr.io/notyusheng/signasl-api:latest
+
+# Run the container
+docker run -d \
+  --name signasl-api \
+  -p 8000:8000 \
+  -v $(pwd)/cache:/app/cache \
+  ghcr.io/notyusheng/signasl-api:latest
+
+# Or use a specific version
+docker pull ghcr.io/notyusheng/signasl-api:v0.0.0-abc1234
+```
+
+**Building from Source:**
 
 ```bash
 # Clone or navigate to the project
@@ -544,6 +561,39 @@ This scraper is designed to populate the video repository for [GestureGPT](../Ge
 - Credit SignASL.org as the source
 - Do not redistribute videos commercially
 
+## GitHub Container Registry (GHCR)
+
+The SignASL API is automatically published to GitHub Container Registry on every push to main and on releases.
+
+### Image Naming Convention
+
+- **Push to main:** `ghcr.io/notyusheng/signasl-api:v0.0.0-{short-sha}`
+- **Release:** `ghcr.io/notyusheng/signasl-api:v1.0.0` (and tagged as `latest`)
+
+### Using GHCR Images
+
+```bash
+# Pull latest version
+docker pull ghcr.io/notyusheng/signasl-api:latest
+
+# Run directly
+docker run -d -p 8000:8000 \
+  -v ./cache:/app/cache \
+  ghcr.io/notyusheng/signasl-api:latest
+
+# Use in docker-compose.yml (uncomment the image line)
+# See docker-compose.yml for details
+```
+
+### Workflow Details
+
+The GitHub Actions workflow (`.github/workflows/publish-ghcr.yml`) automatically:
+1. Builds multi-platform images (linux/amd64, linux/arm64)
+2. Tags images with version + short SHA for pushes to main
+3. Tags images with version only for releases
+4. Pushes `latest` tag only on releases
+5. Uses GitHub Actions cache for faster builds
+
 ## Implementation Status
 
 ✅ **Completed:**
@@ -561,6 +611,9 @@ This scraper is designed to populate the video repository for [GestureGPT](../Ge
 - **Production and development configurations**
 - **Volume persistence for cache**
 - **Health checks and auto-restart**
+- **GitHub Container Registry (GHCR) publishing**
+- **Multi-platform Docker images (amd64, arm64)**
+- **Automated CI/CD with GitHub Actions**
 
 ## Future Enhancements
 
