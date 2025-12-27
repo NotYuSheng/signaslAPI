@@ -2,6 +2,8 @@
 
 A web scraper and REST API for retrieving ASL (American Sign Language) videos from [SignASL.org](https://www.signasl.org/).
 
+> **Part of [GestureGPT](https://github.com/NotYuSheng/GestureGPT)** - This scraper populates the video repository for the GestureGPT ASL learning platform.
+
 ## Overview
 
 This project scrapes ASL sign language videos from SignASL.org and provides a FastAPI-based REST API to:
@@ -585,36 +587,6 @@ docker run -d -p 8000:8000 \
 # See docker-compose.yml for details
 ```
 
-### Workflow Details
-
-The GitHub Actions workflow (`.github/workflows/publish-ghcr.yml`) automatically:
-1. Builds multi-platform images (linux/amd64, linux/arm64)
-2. Tags images with version + short SHA for pushes to main
-3. Tags images with version only for releases
-4. Pushes `latest` tag only on releases
-5. Uses GitHub Actions cache for faster builds
-
-## Implementation Status
-
-✅ **Completed:**
-- Core scraping functionality with BeautifulSoup
-- Video URL extraction from SignASL.org
-- Multiple video support (returns all available videos per word)
-- Video download and caching system
-- Rate limiting (1 second delay between requests)
-- FastAPI REST API with all 6 endpoints
-- Batch download support
-- Cache management (list, clear by word, clear all)
-- Error handling and logging
-- Comprehensive test suite
-- **Docker & Docker Compose setup**
-- **Production and development configurations**
-- **Volume persistence for cache**
-- **Health checks and auto-restart**
-- **GitHub Container Registry (GHCR) publishing**
-- **Multi-platform Docker images (amd64, arm64)**
-- **Automated CI/CD with GitHub Actions**
-
 ## Future Enhancements
 
 - [ ] Add robots.txt parser
@@ -635,7 +607,3 @@ MIT License - See LICENSE file for details
 
 - [SignASL.org](https://www.signasl.org/) - ASL video source
 - Built to support the [GestureGPT](https://github.com/NotYuSheng/GestureGPT) project
-
----
-
-**Note**: This is a work in progress. Always check SignASL.org's terms of service and robots.txt before scraping.
