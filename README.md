@@ -634,7 +634,7 @@ MIT License - See LICENSE file for details
 ## Acknowledgments
 
 - [SignASL.org](https://www.signasl.org/) - ASL video source
-- Built to support the [GestureGPT](../GestureGPT) project
+- Built to support the [GestureGPT](https://github.com/NotYuSheng/GestureGPT) project
 
 ---
 
