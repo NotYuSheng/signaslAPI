@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  signasl-api-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: signasl-api-dev
+    ports:
+      - "8000:8000"
+    volumes:
+      # Mount cache directory to persist downloaded videos
+      - ./cache:/app/cache
+      # Mount source code for hot reload during development
+      - ./scraper:/app/scraper
+      - ./api:/app/api
+    environment:
+      - PYTHONUNBUFFERED=1
+    # Override CMD with reload enabled
+    command: uvicorn api.main:app --host 0.0.0.0 --port 8000 --reload
+    restart: unless-stopped
+    networks:
+      - signasl-network
+
+networks:
+  signasl-network:
+    driver: bridge

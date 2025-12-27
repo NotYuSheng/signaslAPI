@@ -1,0 +1,33 @@
+services:
+  signasl-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: signasl-api
+    ports:
+      - "8000:8000"
+    volumes:
+      # Mount cache directory to persist downloaded videos
+      - ./cache:/app/cache
+      # Optional: Mount for development (uncomment to enable hot reload)
+      # - ./scraper:/app/scraper
+      # - ./api:/app/api
+    environment:
+      - PYTHONUNBUFFERED=1
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8000/', timeout=5)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
+    networks:
+      - signasl-network
+
+networks:
+  signasl-network:
+    driver: bridge
+
+volumes:
+  cache-data:
+    driver: local
